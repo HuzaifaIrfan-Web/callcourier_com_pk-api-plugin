@@ -61,9 +61,9 @@ Tracking Result
 
 
 
-  $callcourier_pk_tracking_api_url = get_option('callcourier_pk_tracking_api_url', 'http://localhost/track/callcourier_pk_api');
+  $callcourier_pk_tracking_api_url = get_option('callcourier_pk_tracking_api_url', 'https://cod.callcourier.com.pk/api/CallCourier/GetTackingHistory');
 
-  $callcourier_pk_tracking_api_url .=  '?tnum=';
+  $callcourier_pk_tracking_api_url .=  '?cn=';
   $callcourier_pk_tracking_api_url .= $tnum;
 
 
@@ -112,9 +112,9 @@ Tracking Result
   curl_close($ch);
 
   // $res = json_decode(file_get_contents($callcourier_pk_tracking_api_url), true);
-  // print_r($res);
+//   print_r($res);
 
-  if ($res == false) {
+  if (gettype($res) == 'string') {
   ?>
 
     <h2 align='center'>
@@ -125,30 +125,16 @@ Tracking Result
   } else {
 
 
+$res=array_reverse($res);
 
 
   ?>
 
 
     <div class='jumbotron' style='display:flex; flex-direction:column;'>
-      <h3 class='callcourier_pk_red cls-trackno'>
 
 
 
-
-
-
-      </h3>
-
-
-
-      <?php
-      $status = $res['status'];
-
-      if ($status) {
-
-    
-      ?>
 
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
@@ -158,13 +144,75 @@ Tracking Result
           </h4>
 
           <div class="row container mx-auto">
-            <div class="col-3"><button class="btn btn-primary">Orgin SRC : <?php echo $status['Orgin_SRC']; ?></button> <button class="btn btn-primary">Destination: <?php echo  $status['Destination']; ?></button></div>
+            <div class="col-3">
+            
+            <button class="btn btn-primary">Orgin : <?php echo $res[0]['OriginCity']; ?></button>
+            <button class="btn btn-primary">Destination : <?php echo  $res[0]['ConsigneeCity']; ?></button></div>
+            
+            
+            
+              <div class="col-3">
+                  <button class="btn btn-primary">Shipper : <?php echo $res[0]['ShipperName']; ?></button> 
+                  <button class="btn btn-primary">Contact : <?php echo $res[0]['ContactNo']; ?> </button>
+                  
+                </div>
+                
+                              <div class="col-3">
+                  <button class="btn btn-primary">Weight : <?php echo $res[0]['Weight']; ?> KG </button> 
+                  <button class="btn btn-primary">COD Amount : <?php echo $res[0]['codAmount'];
+                  ?> pkrs </button>
+                  
+                </div>
+                
 
-              <div class="col-3"><button class="btn btn-primary">Consignment: <?php echo  $status['Consignment']; ?> </button> <button class="btn btn-primary">Status: <?php echo  $status['Current_Status']; ?> </button></div>
+              <div class="col-3">
+                  
+                  <button class="btn btn-primary">Date/Time : <?php 
+                  $datetime=explode("T", $res[0]['CallDate']);
+                  
+                  
+                  echo  $datetime[0];
+                  echo ' ';
+                  echo $datetime[1];
+                  ?> </button>
+                  <button class="btn btn-primary">Status : <?php echo  $res[0]['ProcessDescForPortal']; ?> </button></div>
 
 
 
-              <div class="col-3"><button class="btn btn-primary">Book Time : <?php echo $status['Book_DateTime']; ?></button> <button class="btn btn-primary">Delivery Time: <?php echo $status['Delivery_DateTime']; ?> </button></div>
+          
+                
+                             <div class="col-3">
+                                 
+                                 
+                                            <button class="btn btn-primary">Consignee : <?php 
+                  
+                  echo ($res[0]['ConsigneeName']);
+           
+                  ?></button>        
+                           
+                                 
+                <?php
+                    if ($res[0]['ReceiverName']){
+                ?>      
+                  <button class="btn btn-primary">Recieved By : <?php 
+                  
+                  echo strtoupper($res[0]['ReceiverName']);
+                  echo ' (';
+                  echo $res[0]['Relation'];
+                  echo ')'
+                  
+                  ?></button> 
+                  
+                               
+                     <?php
+  }
+                ?>
+             
+                </div>
+   
+                
+                
+                
 
             </div>
 
@@ -205,24 +253,6 @@ Tracking Result
               }
             </script>
 
-          <?php
-
-
-        }
-
-
-
-
-
-
-
-
-        $track_histories = $res['track_histories'];
-
-
-        if ($track_histories) {
-
-          ?>
 
 
             <div class='track-history' style='overflow-x:auto;'>
@@ -236,19 +266,52 @@ Tracking Result
 
 
                   <ul class="StepProgress ">
-                    <?php foreach ($track_histories as $item) {
+                    <?php foreach ($res as $item) {
+                        
+                        
                     ?>
 
                       <li class="StepProgress-item is-done">
 
                         <span class="transaction-type">
-                          <strong><?php echo strtolower($item['tracking_title']); ?></strong></span>
+                          <strong><?php echo strtolower($item['ProcessDescForPortal']); ?></strong></span>
 
-                        <span class="status-type"><?php echo strtolower($item['span']); ?> </span>
+          
+               <span class="status-type"><?php
+               
+               
+                   echo strtolower($item['HomeBranch']);
+                   
+                   
+                   if ($item['HomeBranch'] != $item['DestBranch']){
+                       
+                       if ($item['DestBranch']){
+                           echo ' --> ';
+                           
+                           echo strtolower($item['DestBranch']);
+                           
+                       }
+                   
+                   }
+    
+               
+               ?> 
+               </span>
                         <br>
+          
+          
+                        
                         <span class="date-type">
-                          <i class="fas fa-clock fa-black-color" aria-hidden="true"></i> <?php echo strtolower($item['date']);
-                                                                                          strtolower($item['time']); ?>
+                          <i class="fas fa-clock fa-black-color" aria-hidden="true"></i> <?php
+                          
+                  $datetime=explode("T", $item['CallDate']);
+                  
+                          
+                          echo strtolower($datetime[0]);
+                          echo ' ';
+                        echo strtolower($datetime[1]); 
+                        
+                        ?>
                         </span>
                       </li>
 
@@ -260,14 +323,10 @@ Tracking Result
               </div>
 
 
+          
+
+          
             </div>
-
-          <?php
-
-
-        } else {
-
-          ?>
 
 
             <!-- <h2 align='center'>
@@ -286,6 +345,6 @@ Nothing Found!!
     <?php
 
 
-        }
+        
       }
     }

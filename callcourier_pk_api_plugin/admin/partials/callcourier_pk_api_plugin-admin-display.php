@@ -37,15 +37,15 @@ if(array_key_exists('submit_api_url', $_POST)){
 
 
 
-    $callcourier_pk_tracking_api_url= get_option('callcourier_pk_tracking_api_url','http://localhost/track/callcourier_pk_api');
-    $callcourier_pk_tracking_details_url= get_option('callcourier_pk_tracking_details_url','/callcourier_pk-shipment-details');
+    $callcourier_pk_tracking_api_url= get_option('callcourier_pk_tracking_api_url','https://cod.callcourier.com.pk/api/CallCourier/GetTackingHistory');
+    $callcourier_pk_tracking_details_url= get_option('callcourier_pk_tracking_details_url','/callcourier-pk-shipment-details');
 
     
 ?>
 
 
 <h2>
-callcourier_pk Scraper API Plugin Admin Page
+Callcourier PK API Plugin Admin Page
 </h2>
 
 

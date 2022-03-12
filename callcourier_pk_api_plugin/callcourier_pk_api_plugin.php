@@ -13,7 +13,7 @@
  * @package           callcourier_pk_api_plugin
  *
  * @wordpress-plugin
- * Plugin Name:       callcourier_pk Scraper API Plugin
+ * Plugin Name:       Callcourier PK API Plugin
  * Plugin URI:        http://huzaifairfan.com/
  * Description:       Display callcourier_pk Tracking Details on your Wordpress Website
  * Version:           1.0.0

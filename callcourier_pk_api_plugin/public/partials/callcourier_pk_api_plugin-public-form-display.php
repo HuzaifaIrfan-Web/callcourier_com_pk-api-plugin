@@ -30,7 +30,7 @@
 }
 
 
-$callcourier_pk_tracking_details_url= get_option('callcourier_pk_tracking_details_url','/callcourier_pk-shipment-details');
+$callcourier_pk_tracking_details_url= get_option('callcourier_pk_tracking_details_url','/callcourier-pk-shipment-details');
 
 
  

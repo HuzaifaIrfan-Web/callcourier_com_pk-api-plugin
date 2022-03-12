@@ -38,7 +38,7 @@ class callcourier_pk_api_plugin_Activator {
 		   [callcourier_pk_track_details]
 
 			', //content of page
-			'post_title'     =>'callcourier_pk Shipment Details', //title of page
+			'post_title'     =>'Callcourier PK Shipment Details', //title of page
 			'post_status'    =>  'publish' , //status of page - publish or draft
 			'post_type'      =>  'page'  // type of post
   );

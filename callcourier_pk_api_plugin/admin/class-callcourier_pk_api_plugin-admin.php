@@ -60,7 +60,7 @@ class callcourier_pk_api_plugin_Admin {
 
 		function callcourier_pk_admin()
 		{
-    		add_menu_page('callcourier_pk Scraper Admin','callcourier_pk Scraper Admin','manage_options','callcourier_pk-scraper-admin','callcourier_pk_admin_page','',200);
+    		add_menu_page('Callcourier PK Admin','Callcourier PK Admin','manage_options','callcourier-pk-admin','callcourier_pk_admin_page','',200);
 		}
 
 		add_action('admin_menu','callcourier_pk_admin');
