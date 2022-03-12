@@ -168,7 +168,7 @@ $res=array_reverse($res);
               <div class="col-3">
                   
                   <button class="btn btn-primary">Date/Time : <?php 
-                  $datetime=explode("T", $res[0]['CallDate']);
+                  $datetime=explode("T", $res[0]['TransactionDate']);
                   
                   
                   echo  $datetime[0];
@@ -304,7 +304,7 @@ $res=array_reverse($res);
                         <span class="date-type">
                           <i class="fas fa-clock fa-black-color" aria-hidden="true"></i> <?php
                           
-                  $datetime=explode("T", $item['CallDate']);
+                  $datetime=explode("T", $item['TransactionDate']);
                   
                           
                           echo strtolower($datetime[0]);
