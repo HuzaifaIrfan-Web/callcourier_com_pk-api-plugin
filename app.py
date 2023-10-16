@@ -9,7 +9,8 @@ urls = [
 url='https://cod.callcourier.com.pk/api/CallCourier/GetTackingHistory?cn=10241520611771'
 
 
-urls.append(url)
+for _ in range(0,10):
+    urls.append(url)
 
 
 start=datetime.datetime.now()
